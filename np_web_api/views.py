@@ -1,9 +1,10 @@
+from __future__ import annotations
+
 import asyncio
 import json
 import logging
 import re
 from datetime import datetime, timedelta
-from typing import Optional
 
 import aiohttp
 import sentry_sdk
@@ -176,9 +177,9 @@ async def data_json():
     # we make the assumption that the cache works perfectly here, i.e., it will always deliver proper data once the
     # values were initially stored into it
     # in reality, it might fail occurrently and return None on all values, but the chance is so low we can ignore that
-    last_updated: Optional[datetime]
-    data: Optional[dict]
-    was_error: Optional[bool]
+    last_updated: datetime | None
+    data: dict | None
+    was_error: bool | None
     last_updated, data, was_error = cache.get_many("last_updated", "data", "was_error")
 
     def is_outdated(last_updated, data, was_error):
